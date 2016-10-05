@@ -53,10 +53,10 @@ class userengage extends Module {
 
     public function hookHeader() {
         $loggedinfo = Context::getContext()->customer->isLogged();
-        $widget = '<script type="text/javascript">';
-       
+        $widget = '<script data-cfasync="false" type="text/javascript">';
+
         if ($loggedinfo) {
-            
+
             $firstname = Context::getContext()->customer->firstname;
              $lastname = Context::getContext()->customer->lastname;
              $email = Context::getContext()->customer->email;
@@ -72,28 +72,26 @@ class userengage extends Module {
                           birthday: "'.$birthday.'"
                     }';
         } else {
-            
+
         $firstname = Context::getContext()->customer->firstname;
         $lastname = Context::getContext()->customer->lastname;
         $email = Context::getContext()->customer->email;
         $widget .= '
         window.civchat = {
-          apiKey: "' . Tools::safeOutput(Configuration::get('UE_APIKEY')) . '",
-          name: "' . $firstname . ' ' . $lastname . '",
-          email: "' . $email . '"
+          apiKey: "' . Tools::safeOutput(Configuration::get('UE_APIKEY')) . '"
         }';
         }
             $key = Tools::getValue('UE_APIKEY');
 
             $widget .= '</script>';
-            $widget .= '<script src="https://widget.userengage.io/widget.js"></script>';
-            
+            $widget .= '<script data-cfasync="false" type="text/javascript" src="https://widget.userengage.io/widget.js"></script>';
+
         return $widget;
     }
 
     public function hookFooter() {
 
-       
+
         if ($this->context->cookie->registration == 1) {
 
             $firstname = $this->context->cookie->firstnameUE;
@@ -110,16 +108,16 @@ class userengage extends Module {
             $this->smarty->assign('register', $register);
 
             $html = $this->display(__FILE__, 'views/userregister.tpl');
-            
+
         } elseif ($_GET["id_cart"] && $_GET["id_order"] && !$this->context->cookie->sendOrder) {
-           
+
             $orderId = $_GET["id_order"];
             $orderData = new Order($_GET["id_order"]);
             $payment = $orderData->payment;
             $price = number_format($orderData->total_paid_tax_incl, 2, '.', '');
             $dateAdd = $orderData->date_add;
             $this->context->cookie->sendOrder = 1;
-            
+
 
             $order = "userengage('event.NewOrder', {'orderId': '" . $orderId . "','payment': '" . $payment . "','price':'" . $price . "', 'date':'" . $dateAdd . "'})";
 
