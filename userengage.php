@@ -127,8 +127,9 @@ class userengage extends Module {
             $html = $this->display(__FILE__, 'views/neworder.tpl');
         } else {
             $this->context->cookie->__unset('sendOrder');
-            $this->smarty->assign('scriptpath', '/modules/userengage/assets/ajaxcart-override.js');
-            $html = $this->display(__FILE__, 'views/userengage.tpl');
+           $this->context->controller->addJS($this->_path.'assets/ajaxcart-override.js');
+           // $this->smarty->assign('scriptpath', _PS_MODULE_DIR_.'userengage/assets/ajaxcart-override.js');
+            //$html = $this->display(__FILE__, 'views/userengage.tpl');
         }
         return $html;
     }
