@@ -1,2 +1,1 @@
-
-<script type="text/javascript" src="{$scriptpath}"></script>
+<input type="hidden" name="modulepath" value="{$baseurl}{$modulepath}" />

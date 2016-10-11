@@ -22,6 +22,7 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
+
 $(document).ready(function(){
    
 	ajaxCart.overrideButtonsInThePage();
@@ -169,6 +170,32 @@ function WishlistCart(id, action, id_product, id_product_attribute, quantity, id
 		}
 	});
 }
+function engage(data) {
+    userengage('event.AddToCart',{data});
+}
+function getAttributes(productId,attributeId) {
+
+     $.ajax({
+        url: baseDir + 'modules/userengage/ajax.php',
+        data: 'method=myMethod&id_data='+attributeId+'&productId='+productId+'',    
+        cache: false,     
+         success: function (response) {
+          
+            
+           msg = JSON.parse(response);
+
+            var sum = '';
+            $.each( msg, function( key, value ) {
+              var res = value.split("--");   
+              sum += ''+res["0"]+': '+res["1"]+',';
+            });
+            
+           engage(sum);
+         }
+     });
+}
+
+
 var ajaxCart = {
 	nb_total_products: 0,
 	//override every button in the page in relation to the cart
@@ -185,8 +212,8 @@ var ajaxCart = {
 				minimalQuantity = 1;
 			if ($(this).prop('disabled') != 'disabled') {
                         //userengage event
-                        userengage('event.AddToCart', {'productId': idProduct,'productAttrId': idProductAttribute,'addUrl':place});
-                        ajaxCart.add(idProduct, idProductAttribute, false, this, minimalQuantity);
+                        getAttributes(idProduct,idProductAttribute);
+                       ajaxCart.add(idProduct, idProductAttribute, false, this, minimalQuantity);
                                 
                     
                     }
@@ -197,8 +224,8 @@ var ajaxCart = {
 				e.preventDefault();
                                 var place = window.location.href;
                                 //userengage event
-                                 userengage('event.AddToCart', {'productId': $('#product_page_product_id').val(),'productAttrId': $('#idCombination').val(),'addUrl':place});
-				ajaxCart.add($('#product_page_product_id').val(), $('#idCombination').val(), true, null, $('#quantity_wanted').val(), null);
+                                getAttributes($('#product_page_product_id').val(),$('#idCombination').val());
+                               ajaxCart.add($('#product_page_product_id').val(), $('#idCombination').val(), true, null, $('#quantity_wanted').val(), null);
 			});
 		}
 

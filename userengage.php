@@ -106,7 +106,7 @@ class userengage extends Module {
             $this->context->cookie->__unset('emailUE');
             $this->context->cookie->__unset('birthdayUE');
             $this->smarty->assign('register', $register);
-
+           
             $html = $this->display(__FILE__, 'views/userregister.tpl');
 
         } elseif ($_GET["id_cart"] && $_GET["id_order"] && !$this->context->cookie->sendOrder) {
@@ -126,10 +126,14 @@ class userengage extends Module {
             $this->smarty->assign('neworder', $order);
             $html = $this->display(__FILE__, 'views/neworder.tpl');
         } else {
+          
+             $ajax_url = $this->context->link->getAdminLink('adminModules').'&configure='.$this->name;
+           
             $this->context->cookie->__unset('sendOrder');
-           $this->context->controller->addJS($this->_path.'assets/ajaxcart-override.js');
-           // $this->smarty->assign('scriptpath', _PS_MODULE_DIR_.'userengage/assets/ajaxcart-override.js');
-            //$html = $this->display(__FILE__, 'views/userengage.tpl');
+	    $this->context->controller->addJS($this->_path.'assets/ajaxcart-override.js');
+            $this->smarty->assign('baseurl',$this->context->link->getPageLink('index',true));
+            $this->smarty->assign('modulepath', $ajax_url);
+            $html = $this->display(__FILE__, 'views/userengage.tpl');
         }
         return $html;
     }
@@ -240,7 +244,7 @@ class userengage extends Module {
             }
         }
     }
-
+   
     public function getContent() {
         $output = '';
         if (Tools::isSubmit('submit' . $this->name)) {
@@ -252,5 +256,7 @@ class userengage extends Module {
         }
         return $output .= $this->displayForm();
     }
-
+    public function ajaxProcessMyAjaxMethod() {
+        echo 'hello world!';
+    }
 }
