@@ -7,12 +7,12 @@ $myproduct = new Product((int)$_GET["productId"]);
 
 $attribute = $myproduct->getAttributeCombinationsById($_GET["id_data"], $cookie->id_lang);
 $attrs = array();
-$additional = '';
+
 array_push($attrs, 'Name--'.$myproduct->name["1"]);
 array_push($attrs, 'Reference--'.$myproduct->reference);
 
 
-$additional .= '"'.$attrs["name"].'": "'.$myproduct->name["1"].'", '.$attrs["reference"].': '.$myproduct->reference.',';
+
 foreach($attribute as $attr) {
     
     $a = $attr["group_name"];
