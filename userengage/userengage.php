@@ -196,7 +196,7 @@ class userengage extends Module {
                 array(
                     'type' => 'text',
                     'label' => $this->l('Your Api Key:'),
-                    'desc' => $this->l('Please enter your application key which has been sent to your email address. The api key is a 64 letter and number key.'),
+                    'desc' => $this->l('Please enter your application key which has been sent to your email address. The api key is a 6  letter and number key.'),
                     'name' => 'UE_APIKEY',
                     'required' => true,
                     'hint' => $this->l('This information is available in your UserEngage account')
