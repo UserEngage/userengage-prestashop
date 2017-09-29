@@ -1,7 +1,7 @@
 <?php
 
 /*
- * 2015 UserEngage.io
+ * 2017 UserEngage.com
  */
 
 if (!defined('_PS_VERSION_'))
@@ -13,7 +13,7 @@ class userengage extends Module {
         $this->name = 'userengage';
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
-        $this->author = 'UserEngage.io';
+        $this->author = 'UserEngage.com';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
         $this->bootstrap = true;
@@ -84,7 +84,7 @@ class userengage extends Module {
             $key = Tools::getValue('UE_APIKEY');
 
             $widget .= '</script>';
-            $widget .= '<script data-cfasync="false" type="text/javascript" src="https://widget.userengage.io/widget.js"></script>';
+            $widget .= '<script data-cfasync="false" type="text/javascript" src="https://widget.userengage.com/widget.js"></script>';
 
         return $widget;
     }
