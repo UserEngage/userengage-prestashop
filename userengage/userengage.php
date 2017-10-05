@@ -256,7 +256,5 @@ class userengage extends Module {
         }
         return $output .= $this->displayForm();
     }
-    public function ajaxProcessMyAjaxMethod() {
-        echo 'hello world!';
-    }
+
 }
